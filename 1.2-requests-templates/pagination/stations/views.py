@@ -1,4 +1,5 @@
 import csv
+from email.policy import default
 
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -15,8 +16,8 @@ def bus_stations(request):
     # также передайте в контекст список станций на странице
     with open(settings.BUS_STATION_CSV, 'r', encoding='utf-8') as csvfile:
         data = [item for item in csv.DictReader(csvfile)]
-    str_page = request.GET.get('page')
-    if str_page and str_page.isnumeric():
+    str_page = request.GET.get('page', default='1')
+    if str_page.isnumeric():
         int_page = int(str_page)
     else:
         int_page = 1
