@@ -40,7 +40,7 @@ class AdvertisementViewSet(ModelViewSet):
             return [IsAuthenticated()]
         return []
 
-    @action(methods=['patch'], detail=True)
+    @action(methods=['post'], detail=True)
     def add_favorite(self, request, pk=None):
         obj = Advertisement.objects.get(id=pk)
         self.check_object_permissions(request, obj)
