@@ -7,7 +7,7 @@
 Создать Docker-container:
 
 ```bash
-docker build
+docker build .
 ```
 
 Запустить Docker-container:
