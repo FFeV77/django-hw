@@ -4,7 +4,7 @@
 
 Для запуска проекта необходимо:
 
-Отредактировать и переименовать .env-
+Отредактировать и переименовать .env-template
 
 Создать Docker-образ:
 
@@ -15,5 +15,5 @@ docker build .
 Запустить Docker-container:
 
 ```bash
-docker run -d -p 7777:8000 <NAME>
+docker run -d -p <port>:8000 <образ>
 ```
