@@ -4,7 +4,7 @@
 
 Для запуска проекта необходимо:
 
-Создать Docker-container:
+Создать Docker-образ:
 
 ```bash
 docker build .
