@@ -12,7 +12,11 @@
 1. Отредактировать переменные окружения
 
 2. Запустить оркестрацию
+  ```
   docker compose -f Docker-compose.yml up -d --build
+  ```
   
 3. После запуска сервера postgres, выполнить миграции
+  ```
   docker compose -f Docker-compose.yml exec pythonapp python manage.py migrate --noinput
+  ```
