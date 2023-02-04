@@ -1,0 +1,54 @@
+version: "3.9"
+
+networks:
+ backend:
+
+# volumes:
+# ...
+
+services:
+ db:
+  container_name: postgres_db
+  image: postgres:alpine
+  restart: unless-stopped
+  networks:
+   - backend
+  expose:
+   - 5432
+  volumes:
+   - ./logs:/var/log
+  environment:
+   - POSTGRES_DB=netology_stocks_products
+   - POSTGRES_USER=postgres
+   - POSTGRES_PASSWORD=postgres
+  healthcheck:
+   test: ["CMD-SHELL", "pg_isready -U postgres -d pythonapp_db"]
+   interval: 1m30s
+   timeout: 30s
+   retries: 5
+   start_period: 30s
+ pythonapp:
+  build: ./stocks_products/
+  container_name: pythonapp
+  command: gunicorn --bind 0.0.0.0:8000 stocks_products.wsgi:application
+  expose:
+   - 8000
+  depends_on:
+   - db
+  networks:
+   - backend
+  env_file:
+   - ./.env
+ nginx:
+  image: nginx:latest
+  restart: unless-stopped
+  networks:
+   - backend
+  volumes:
+   - ./logs/nginx:/var/log/nginx
+   - ./nginx/conf.d/:/etc/nginx/conf.d/
+   - ./stocks_products/static/:/staticfiles/static/
+  ports: 
+   - 8080:80
+
+
